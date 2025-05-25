@@ -17,14 +17,14 @@ export default async function handler(req, res) {
     port: 465,
     secure: true,
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_APP_PASSWORD
+      user: 'info@neidsoft.com',
+      pass: 'KrQfXG2R5PmS'
     }
   });
 
   const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: process.env.EMAIL_USER,
+    from: 'info@neidsoft.com',
+    to: 'info@neidsoft.com',
     subject: `Nuevo mensaje de contacto de ${name}`,
     html: `
       <p><strong>Nombre:</strong> ${name}</p>
