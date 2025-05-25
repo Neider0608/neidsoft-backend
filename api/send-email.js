@@ -1,16 +1,29 @@
 import nodemailer from 'nodemailer';
 
 export default async function handler(req, res) {
+  // Habilitar CORS
+  res.setHeader('Access-Control-Allow-Origin', 'https://www.neidsoft.com'); // Cambia según tu dominio
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Manejar petición preflight OPTIONS
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  // Verificar método POST
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Método no permitido' });
   }
 
   const { name, email, message } = req.body;
 
+  // Validar campos requeridos
   if (!name || !email || !message) {
     return res.status(400).json({ message: 'Todos los campos son requeridos.' });
   }
 
+  // Configurar transporter con Zoho
   const transporter = nodemailer.createTransport({
     service: 'Zoho',
     host: 'smtp.zoho.com',
@@ -18,7 +31,7 @@ export default async function handler(req, res) {
     secure: true,
     auth: {
       user: 'info@neidsoft.com',
-      pass: 'KrQfXG2R5PmS'
+      pass: 'KrQfXG2R5PmS', // ⚠️ Asegúrate de guardar esto en variables de entorno en producción
     }
   });
 
